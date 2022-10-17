@@ -42,6 +42,8 @@ class PackageInstallationTest {
         assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/test.lua")).exists();
         assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/test.xml")).exists();
         assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/NoteworthyII.toc")).exists();
+        assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/NoteworthyII-Vanilla.toc")).exists();
+        assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/NoteworthyII-Wrath.toc")).exists();
         assertThat(testPackageInstallationPath.resolve("Interface/AddOns/NoteworthyII/lib/testlib.lua")).exists();
     }
 }

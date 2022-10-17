@@ -7,6 +7,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 import static org.theparanoidtimes.noteworthy.noteworthywrapper.Constants.CHANGELOG_PATH;
@@ -28,10 +29,10 @@ public class upload implements Callable<Integer> {
             required = true)
     private String releaseVersion;
 
-    @Option(names = {"-gv", "--gameVersion"},
-            description = "Supported WoW version by the package being uploaded.",
+    @Option(names = {"-gv", "--gameVersions"},
+            description = "Coma-separated list of supported WoW versions. For example <retail>,<wrath>,<vanilla>.",
             required = true)
-    private String gameVersion;
+    private String gameVersions;
 
     @Option(names = {"-v", "--verbose"},
             description = "Print verbose output of the upload process.")
@@ -59,12 +60,17 @@ public class upload implements Callable<Integer> {
             verbosePrint("Extracting changelog delta...");
             var changelogDelta = ChangelogDeltaGenerator.generateChangelogDelta(Path.of(CHANGELOG_PATH), releaseVersion);
             verbosePrint(String.format("Extracted changelog delta:%n%s%n", changelogDelta));
+
             var uploadRequest = new UploadRequest();
             uploadRequest.setChangelog(changelogDelta);
             uploadRequest.setDisplayName(releaseVersion);
             uploadRequest.setReleaseType(rt);
             verbosePrint("Constructed upload request: " + uploadRequest);
-            var fileId = CurseForgeUploader.uploadReleaseToCurseForge(packagePath, gameVersion, uploadRequest, verboseOutput);
+
+            var gameVersionList = Arrays.stream(gameVersions.split(",")).toList();
+            verbosePrint("Detected supported WoW versions: " + gameVersionList);
+
+            var fileId = CurseForgeUploader.uploadReleaseToCurseForge(packagePath, gameVersionList, uploadRequest, verboseOutput);
             System.out.println("Release uploaded to CurseForge, file ID: " + fileId);
             return 0;
         } catch (Exception e) {

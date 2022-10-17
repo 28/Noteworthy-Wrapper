@@ -21,11 +21,15 @@ public final class PackageInstallation {
         var xmlSourcePath = sourcePath.resolve(XML_SOURCE_PATH);
         var librariesPath = sourcePath.resolve(LIBRARIES_PATH);
         var tocPath = sourcePath.resolve(TOC_PATH);
+        var tocWrathPath = sourcePath.resolve(TOC_WRATH_PATH);
+        var tocVanillaPath = sourcePath.resolve(TOC_VANILLA_PATH);
         cleanInstallationDirectory(installationDir);
         doInstallLocally(luaSourcePath, installationDir);
         doInstallLocally(xmlSourcePath, installationDir);
         doInstallLocally(librariesPath, installationDir, "lib/");
         doInstallLocally(tocPath, installationDir);
+        doInstallLocally(tocWrathPath, installationDir);
+        doInstallLocally(tocVanillaPath, installationDir);
         System.out.println("Noteworthy II installed to: " + installationDir);
     }
 

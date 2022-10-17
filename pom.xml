@@ -114,24 +114,6 @@
                                         <copy file="src/main/resources/nww.sh"
                                               tofile="../NoteworthyII-retail/nww.sh"
                                               overwrite="true"/>
-                                        <copy file="target/nww.jar"
-                                              tofile="../NoteworthyII-classic/.nww/nww.jar"
-                                              overwrite="true"/>
-                                        <copy file="src/main/resources/nww.bat"
-                                              tofile="../NoteworthyII-classic/nww.bat"
-                                              overwrite="true"/>
-                                        <copy file="src/main/resources/nww.sh"
-                                              tofile="../NoteworthyII-classic/nww.sh"
-                                              overwrite="true"/>
-                                        <copy file="target/nww.jar"
-                                              tofile="../NoteworthyII-classic-era/.nww/nww.jar"
-                                              overwrite="true"/>
-                                        <copy file="src/main/resources/nww.bat"
-                                              tofile="../NoteworthyII-classic-era/nww.bat"
-                                              overwrite="true"/>
-                                        <copy file="src/main/resources/nww.sh"
-                                              tofile="../NoteworthyII-classic-era/nww.sh"
-                                              overwrite="true"/>
                                     </target>
                                 </configuration>
                                 <goals>

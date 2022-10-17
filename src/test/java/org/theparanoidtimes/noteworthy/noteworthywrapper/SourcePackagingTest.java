@@ -44,17 +44,21 @@ class SourcePackagingTest {
         SourcePackaging.zipSourceDirectory(testSourcePath, testPackageDestinationPath, currentTimeMillis);
 
         var finalName = testPackageDestinationPath.resolve("NoteworthyII_" + currentTimeMillis + ".zip").toString();
-        assertThat(Path.of(finalName)).exists();
-        assertThat(Path.of(finalName).toFile()).isNotEmpty();
+        var finalPath = Path.of(finalName);
+        assertThat(finalPath).exists();
+        assertThat(finalPath.toFile()).isNotEmpty();
 
-        var zipFile = new ZipFile(finalName);
-        var zippedFilesSet = zipFile.stream().map(ZipEntry::getName).collect(Collectors.toSet());
-        assertThat(zippedFilesSet).contains("NoteworthyII/test.lua");
-        assertThat(zippedFilesSet).contains("NoteworthyII/test.xml");
-        assertThat(zippedFilesSet).contains("NoteworthyII/lib/testlib.lua");
-        assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII.toc");
-        assertThat(zippedFilesSet).contains("NoteworthyII/README.md");
-        assertThat(zippedFilesSet).contains("NoteworthyII/LICENSE.txt");
+        try (var zipFile = new ZipFile(finalName)) {
+            var zippedFilesSet = zipFile.stream().map(ZipEntry::getName).collect(Collectors.toSet());
+            assertThat(zippedFilesSet).contains("NoteworthyII/test.lua");
+            assertThat(zippedFilesSet).contains("NoteworthyII/test.xml");
+            assertThat(zippedFilesSet).contains("NoteworthyII/lib/testlib.lua");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII-Vanilla.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII-Wrath.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/README.md");
+            assertThat(zippedFilesSet).contains("NoteworthyII/LICENSE.txt");
+        }
     }
 
     @Test
@@ -63,16 +67,20 @@ class SourcePackagingTest {
         SourcePackaging.zipSourceDirectory(testSourcePath, testPackageDestinationPath, version);
 
         var finalName = testPackageDestinationPath.resolve("NoteworthyII_" + version + ".zip").toString();
-        assertThat(Path.of(finalName)).exists();
-        assertThat(Path.of(finalName).toFile()).isNotEmpty();
+        var finalPath = Path.of(finalName);
+        assertThat(finalPath).exists();
+        assertThat(finalPath.toFile()).isNotEmpty();
 
-        var zipFile = new ZipFile(finalName);
-        var zippedFilesSet = zipFile.stream().map(ZipEntry::getName).collect(Collectors.toSet());
-        assertThat(zippedFilesSet).contains("NoteworthyII/test.lua");
-        assertThat(zippedFilesSet).contains("NoteworthyII/test.xml");
-        assertThat(zippedFilesSet).contains("NoteworthyII/lib/testlib.lua");
-        assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII.toc");
-        assertThat(zippedFilesSet).contains("NoteworthyII/README.md");
-        assertThat(zippedFilesSet).contains("NoteworthyII/LICENSE.txt");
+        try (var zipFile = new ZipFile(finalName)) {
+            var zippedFilesSet = zipFile.stream().map(ZipEntry::getName).collect(Collectors.toSet());
+            assertThat(zippedFilesSet).contains("NoteworthyII/test.lua");
+            assertThat(zippedFilesSet).contains("NoteworthyII/test.xml");
+            assertThat(zippedFilesSet).contains("NoteworthyII/lib/testlib.lua");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII-Vanilla.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/NoteworthyII-Wrath.toc");
+            assertThat(zippedFilesSet).contains("NoteworthyII/README.md");
+            assertThat(zippedFilesSet).contains("NoteworthyII/LICENSE.txt");
+        }
     }
 }

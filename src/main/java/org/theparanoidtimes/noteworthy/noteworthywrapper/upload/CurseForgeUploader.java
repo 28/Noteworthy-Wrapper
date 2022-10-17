@@ -16,10 +16,10 @@ public abstract class CurseForgeUploader {
 
     private static OkHttpClient client;
 
-    public static Long uploadReleaseToCurseForge(Path pathToRelease, String gameVersion, UploadRequest uploadRequest, boolean verboseOutput) throws Exception {
-        var gameVersionId = getGameVersionId(gameVersion);
-        System.out.printf("Found game version ID: '%s'.%n", gameVersionId);
-        uploadRequest.setGameVersions(List.of(gameVersionId));
+    public static Long uploadReleaseToCurseForge(Path pathToRelease, List<String> gameVersions, UploadRequest uploadRequest, boolean verboseOutput) throws Exception {
+        var gameVersionIds = gameVersions.stream().map(CurseForgeUploader::getGameVersionId).toList();
+        System.out.printf("Found game version ID: '%s'.%n", gameVersionIds);
+        uploadRequest.setGameVersions(gameVersionIds);
 
         String uploadRequestJson = getObjectMapper().writeValueAsString(uploadRequest);
         if (verboseOutput)
@@ -52,7 +52,7 @@ public abstract class CurseForgeUploader {
         }
     }
 
-    private static Long getGameVersionId(String gameVersion) throws Exception {
+    private static Long getGameVersionId(String gameVersion) {
         var request = new Request.Builder()
                 .url(CF_BASE_URL + CF_VERSION_URL)
                 .header(CF_TOKEN_HEADER, CF_API_TOKEN)
@@ -67,6 +67,8 @@ public abstract class CurseForgeUploader {
                 var gameVersions = getObjectMapper().readValue(body.string(), new TypeReference<List<GameVersion>>() {});
                 return gameVersions.stream().filter(gv -> gv.getName().equals(gameVersion)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.format("CurseForge does not recognize WoW version: '%s'!", gameVersion))).getId();
             } else throw new IllegalStateException("Request was successful, but body was empty!");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

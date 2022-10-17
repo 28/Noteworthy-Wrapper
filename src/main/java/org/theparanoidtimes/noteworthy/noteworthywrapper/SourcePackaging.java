@@ -26,6 +26,8 @@ public final class SourcePackaging {
         var xmlSourcePath = basePath.resolve(XML_SOURCE_PATH);
         var librariesPath = basePath.resolve(LIBRARIES_PATH);
         var tocPath = basePath.resolve(TOC_PATH);
+        var tocWrathPath = basePath.resolve(TOC_WRATH_PATH);
+        var tocVanillaPath = basePath.resolve(TOC_VANILLA_PATH);
         var readmePath = basePath.resolve(README_PATH);
         var licensePath = basePath.resolve(LICENSE_PATH);
         try (var fileOutputStream = new FileOutputStream(outputPackageName);
@@ -34,6 +36,8 @@ public final class SourcePackaging {
             doZipSourceDirectory(xmlSourcePath, zipOutputStream);
             doZipSourceDirectory(librariesPath, zipOutputStream, "lib/");
             doZipSourceDirectory(tocPath, zipOutputStream);
+            doZipSourceDirectory(tocWrathPath, zipOutputStream);
+            doZipSourceDirectory(tocVanillaPath, zipOutputStream);
             doZipSourceDirectory(readmePath, zipOutputStream);
             doZipSourceDirectory(licensePath, zipOutputStream);
         }
