@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.theparanoidtimes.noteworthy</groupId>
+    <artifactId>noteworthy-wrapper</artifactId>
+    <version>2.0</version>
+    <packaging>jar</packaging>
+
+    <name>Noteworthy Wrapper</name>
+    <description>The tool for building, packaging and installing Noteworthy II World of Warcraft addon</description>
+    <url>https://github.com/28/noteworthy-wrapper</url>
+    <inceptionYear>2021</inceptionYear>
+    <developers>
+        <developer>
+            <id>drow_28</id>
+            <name>Dejan Josifović</name>
+            <organization>theparanoidtimes.org</organization>
+            <email>theparanoidtimes@posteo.net</email>
+        </developer>
+    </developers>
+    <organization>
+        <name>theparanoidtimes.org</name>
+        <url>https://theparanoidtimes.org</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE Version 3</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <picocli.version>4.6.3</picocli.version>
+        <jackson.version>2.13.4</jackson.version>
+        <okhttp.version>4.10.0</okhttp.version>
+        <junit.version>5.9.0</junit.version>
+        <assertj.version>3.23.1</assertj.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>nww</finalName>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <Built-By>${project.developers[0].name} / ${project.developers[0].id}</Built-By>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <X-Author>${project.developers[0].name} / ${project.developers[0].id}</X-Author>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <X-Author-Email>${project.developers[0].email}</X-Author-Email>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+                                <Implementation-URL>${project.url}</Implementation-URL>
+                                <Build-Jdk>${maven.compiler.target}</Build-Jdk>
+                                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                            </manifestEntries>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>install-locally</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <configuration>
+                                    <target>
+                                        <copy file="target/nww.jar"
+                                              tofile="../NoteworthyII-retail/.nww/nww.jar"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.bat"
+                                              tofile="../NoteworthyII-retail/nww.bat"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.sh"
+                                              tofile="../NoteworthyII-retail/nww.sh"
+                                              overwrite="true"/>
+                                        <copy file="target/nww.jar"
+                                              tofile="../NoteworthyII-classic/.nww/nww.jar"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.bat"
+                                              tofile="../NoteworthyII-classic/nww.bat"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.sh"
+                                              tofile="../NoteworthyII-classic/nww.sh"
+                                              overwrite="true"/>
+                                        <copy file="target/nww.jar"
+                                              tofile="../NoteworthyII-classic-era/.nww/nww.jar"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.bat"
+                                              tofile="../NoteworthyII-classic-era/nww.bat"
+                                              overwrite="true"/>
+                                        <copy file="src/main/resources/nww.sh"
+                                              tofile="../NoteworthyII-classic-era/nww.sh"
+                                              overwrite="true"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>${picocli.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
