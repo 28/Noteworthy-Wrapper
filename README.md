@@ -208,12 +208,13 @@ The release package should be present (see _Packaging_) before running the comma
 
 ```shell
 > nww.bat upload -h
-Usage: upload [-hvV] -gv=<gameVersion> -p=<pathToPackage> [-rt=<releaseType>]
+Usage: upload [-hvV] -gv=<gameVersions> -p=<pathToPackage> [-rt=<releaseType>]
               -rv=<releaseVersion>
 Uploads a Noteworthy II package and its associated metadata to CurseForge as a
 release.
-      -gv, --gameVersion=<gameVersion>
-                  Supported WoW version by the package being uploaded.
+      -gv, --gameVersions=<gameVersions>
+                  Coma-separated list of supported WoW versions. For example
+                    <retail>,<wrath>,<vanilla>.
   -h, --help      Show this help message and exit.
   -p, --pathToPackage=<pathToPackage>
                   Path to the release package.
