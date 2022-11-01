@@ -1,6 +1,6 @@
 # Noteworthy Wrapper
 
-Current version: 2.0
+Current version: 2.1
 
 Noteworthy Wrapper is a custom-made build tool for *Noteworthy II* World of Warcraft add-on. It is used for the add-on development, doing
 tasks such as preparing packages for distribution, installing and uninstalling the add-on locally etc.
