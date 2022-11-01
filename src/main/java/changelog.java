@@ -11,7 +11,7 @@ import static org.theparanoidtimes.noteworthy.noteworthywrapper.Constants.CHANGE
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "changelog",
         description = "Extracts info from the Change log for the required version range.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true
 )
 public class changelog implements Callable<Integer> {

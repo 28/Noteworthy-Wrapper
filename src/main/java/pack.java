@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "pack",
         description = "Packages the Noteworthy II source to a zip file. Package version can be provided to be included in the name, otherwise current timestamp is appended.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true)
 public class pack implements Callable<Integer> {
 

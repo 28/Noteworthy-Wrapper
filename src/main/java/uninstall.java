@@ -13,7 +13,7 @@ import static org.theparanoidtimes.noteworthy.noteworthywrapper.Constants.INSTAL
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "uninstall",
         description = "Uninstalls Noteworthy II from WoW addons location.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true)
 public class uninstall implements Callable<Integer> {
 

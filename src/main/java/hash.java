@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "hash",
         description = "Creates a hash value for the given package file. Can use MD5, SHA-1, SHA-256, SHA-384 and SHA-512.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true)
 public class hash implements Callable<Integer> {
 

@@ -15,7 +15,7 @@ import static org.theparanoidtimes.noteworthy.noteworthywrapper.Constants.CHANGE
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "upload",
         description = "Uploads a Noteworthy II package and its associated metadata to CurseForge as a release.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true)
 public class upload implements Callable<Integer> {
 

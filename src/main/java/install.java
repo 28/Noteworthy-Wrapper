@@ -11,7 +11,7 @@ import static picocli.CommandLine.Option;
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 @Command(name = "install",
         description = "Installs the given Noteworthy II source to the WoW installation directory. The directory can be passed as a parameter. If not, it is read from 'WOWIL' environment variable.",
-        version = "Version 2.0 Noteworthy Wrapper",
+        version = "Version 2.1 Noteworthy Wrapper",
         mixinStandardHelpOptions = true)
 public class install implements Callable<Integer> {
 
