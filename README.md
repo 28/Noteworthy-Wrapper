@@ -237,6 +237,11 @@ Attempting to upload release to CurseForge...
 Release uploaded to CurseForge, file ID: 58642
 ```
 
+#### CurseForge project API overview
+
+Noteworthy Wrapper uses CurseForge upload API for uploading new Noteworthy II
+releases. The overview of the API is [here](https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-upload-api).
+
 ## Licence
 
 Copyright (C) 2021-2022 Dejan Josifović theparanoidtimes.org
