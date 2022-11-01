@@ -15,6 +15,7 @@ import static org.theparanoidtimes.noteworthy.noteworthywrapper.upload.ObjectMap
 public abstract class CurseForgeUploader {
 
     private static OkHttpClient client;
+    private static List<GameVersion> gameVersions;
 
     public static Long uploadReleaseToCurseForge(Path pathToRelease, List<String> gameVersions, UploadRequest uploadRequest, boolean verboseOutput) throws Exception {
         var gameVersionIds = gameVersions.stream().map(CurseForgeUploader::getGameVersionId).toList();
@@ -53,20 +54,28 @@ public abstract class CurseForgeUploader {
     }
 
     private static Long getGameVersionId(String gameVersion) {
-        var request = new Request.Builder()
-                .url(CF_BASE_URL + CF_VERSION_URL)
-                .header(CF_TOKEN_HEADER, CF_API_TOKEN)
-                .build();
+        try {
+            if (gameVersions == null) {
+                var request = new Request.Builder()
+                        .url(CF_BASE_URL + CF_VERSION_URL)
+                        .header(CF_TOKEN_HEADER, CF_API_TOKEN)
+                        .build();
 
-        System.out.printf("Requesting WoW game versions with release version '%s'.%n", gameVersion);
-        try (var response = getClient().newCall(request).execute()) {
-            if (!response.isSuccessful())
-                throw new Exception("Request unsuccessful: " + response);
-            var body = response.body();
-            if (body != null) {
-                var gameVersions = getObjectMapper().readValue(body.string(), new TypeReference<List<GameVersion>>() {});
-                return gameVersions.stream().filter(gv -> gv.getName().equals(gameVersion)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.format("CurseForge does not recognize WoW version: '%s'!", gameVersion))).getId();
-            } else throw new IllegalStateException("Request was successful, but body was empty!");
+                System.out.printf("Requesting WoW game versions with release version '%s'.%n", gameVersion);
+                try (var response = getClient().newCall(request).execute()) {
+                    if (!response.isSuccessful())
+                        throw new Exception("Request unsuccessful: " + response);
+                    var body = response.body();
+                    if (body != null) {
+                        gameVersions = getObjectMapper().readValue(body.string(), new TypeReference<>() {});
+                    } else throw new IllegalStateException("Request was successful, but body was empty!");
+                }
+            }
+            return gameVersions.stream()
+                    .filter(gv -> gv.getName().equals(gameVersion))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(String.format("CurseForge does not recognize WoW version: '%s'!", gameVersion)))
+                    .getId();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
